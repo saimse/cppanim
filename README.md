@@ -15,12 +15,19 @@ make && make install
 should be enough.
 
 Possible build targets are:
- - `test` - coverage tests (`bash` necessary)
- - `utils` - utility tools (builds library)
- - `clean` - deletes built files (leaves installed files)
- - `docs` - Runs doxygen
+ - `cppanim`: Builds the library into bin/
+ - `utils`: Builds util programs to aid with development
+ - `test`: Builds and runs the entire test suite
+ - `all`: Builds cppanim, utils and test
+ - `docs`: Builds documentation into docs/
+ - `help`: Prints this help screen
+The following clean operations are available:
+ - `clean`: Deletes bin/ output
+ - `cleandocs`: Deletes generated documentation
+ - `mrproper`: Deletes everything built
+	 
 
 ## Documentation
 
 Code is written with javadoc documentation. Doxygen generated docs
-are in `docs/`
+are in `docs/output`
