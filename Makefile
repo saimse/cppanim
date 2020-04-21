@@ -1,0 +1,89 @@
+submodules = src test utils
+
+src_dir = src
+test_dir = $(src_dir)/test
+utils_dir = utils
+bin_dir = bin
+include_dir = include
+docs_dir = docs
+
+CC = gcc
+
+BUILDFLAGS = -I$(include)/
+
+ifeq ($(OS),Windows_NT)
+# Necessary for pthreads to work under MinGW
+	OSFLAG += -Wl,-Bstatic -lpthread -Wl,-Bdynamic -w
+	LINKFLAGS += -shared -Wl,--out-implib,$(bin_dir)/libcppanim.dll.a -o $(bin_dir)/libcppanim.dll
+
+	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+		OSFLAG += -m64
+	endif
+	ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+		OSFLAG += -m32
+	endif
+else
+	LINKFLAGS += -o $(bin_dir)/libcppanim.so
+	UNAME_P := $(shell uname -p)
+	ifeq ($(UNAME_P),x86_64)
+		OSFLAG += -m64
+	endif
+	ifneq ($(filter %86,$(UNAME_P)),)
+		OSFLAG += -m32
+	endif
+endif
+
+
+all: $(submodules)
+
+# cppanim is an alias for src
+.PHONY: cppanim
+cppanim: src
+
+# Utils are built with the library, hence the dependency
+utils: cppanim
+
+.PHONY: clean
+clean:
+	rm -f $(bin_dir)/*
+
+.PHONY: cleandocs
+cleandocs:
+	rm -rf $(docs_dir)/output/*
+
+.PHONY: mrproper
+mrproper: clean cleandocs
+
+CFLAGS = $(OSFLAGS) $(BUILDFLAGS)
+.PHONY: $(submodules)
+export CFLAGS
+export LINKFLAGS
+$(submodules):
+	@echo "[INFO] Building submodule $(@F)..."
+	@make -C $($(@F)_dir)
+
+###################################################
+
+.PHONY: docs
+docs:
+	@echo "TODO(milevuletic): Implement docs build system"
+
+.PHONY: help
+help:
+	@echo ""
+	@echo "cppanim is a standalone console animation library."
+	@echo "Available build targets are:"
+	@echo ""
+	@echo "  cppanim: Builds the library into bin/"
+	@echo "  utils: Builds util programs to aid with development"
+	@echo "  test: Builds and runs the entire test suite"
+	@echo "  all: Builds cppanim, utils and test"
+	@echo "  docs: Builds documentation into docs/"
+	@echo "  help: Prints this help screen"
+	@echo ""
+	@echo "The following clean operations are available:"
+	@echo ""
+	@echo "  clean: Deletes bin/ output"
+	@echo "  cleandocs: Deletes generated documentation"
+	@echo "  mrproper: Deletes everything built"
+	@echo ""
