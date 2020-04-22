@@ -7,7 +7,7 @@ bin_dir = bin
 include_dir = include
 docs_dir = docs
 
-CC = gcc
+CPP = g++
 
 BUILDFLAGS = -I$(include)/
 
@@ -58,6 +58,7 @@ CFLAGS = $(OSFLAGS) $(BUILDFLAGS)
 .PHONY: $(submodules)
 export CFLAGS
 export LINKFLAGS
+export CPP
 $(submodules):
 	@echo "[INFO] Building submodule $(@F)..."
 	@make -C $($(@F)_dir)
