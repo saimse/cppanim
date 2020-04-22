@@ -1,16 +1,17 @@
 submodules = src test utils
 
-src_dir = src
-test_dir = $(src_dir)/test
-obj_dir = obj
-utils_dir = utils
-bin_dir = bin
-include_dir = include
-docs_dir = docs
+root_dir = $(realpath .)
+src_dir = $(root_dir)/src
+test_dir = $(root_dir)/$(src_dir)/test
+obj_dir = $(root_dir)/obj
+utils_dir = $(root_dir)/utils
+bin_dir = $(root_dir)/bin
+include_dir = $(root_dir)/include
+docs_dir = $(root_dir)/docs
 
 CPP = g++
 
-BUILDFLAGS = -I$(include)/
+BUILDFLAGS = -I$(include_dir)/
 
 ifeq ($(OS),Windows_NT)
 # Necessary for pthreads to work under MinGW
@@ -33,6 +34,9 @@ else
 		OSFLAG += -m32
 	endif
 endif
+LINKFLAGS += -shared $(obj_dir)/*.o
+
+CFLAGS = $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 
 
 all: $(submodules)
@@ -47,6 +51,7 @@ utils: cppanim
 .PHONY: clean
 clean:
 	rm -f $(bin_dir)/*
+	rm -f $(obj_dir)/*
 
 .PHONY: cleandocs
 cleandocs:
@@ -55,13 +60,13 @@ cleandocs:
 .PHONY: mrproper
 mrproper: clean cleandocs
 
-CFLAGS = $(OSFLAGS) $(BUILDFLAGS)
 .PHONY: $(submodules)
 export CFLAGS
 export LINKFLAGS
 export CPP
 export obj_dir
 export bin_dir
+export include_dir
 $(submodules):
 	@echo "[INFO] Building submodule $(@F)..."
 	@make -C $($(@F)_dir)
