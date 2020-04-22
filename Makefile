@@ -2,6 +2,7 @@ submodules = src test utils
 
 src_dir = src
 test_dir = $(src_dir)/test
+obj_dir = obj
 utils_dir = utils
 bin_dir = bin
 include_dir = include
@@ -59,6 +60,8 @@ CFLAGS = $(OSFLAGS) $(BUILDFLAGS)
 export CFLAGS
 export LINKFLAGS
 export CPP
+export obj_dir
+export bin_dir
 $(submodules):
 	@echo "[INFO] Building submodule $(@F)..."
 	@make -C $($(@F)_dir)
