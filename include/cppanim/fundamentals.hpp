@@ -12,6 +12,7 @@ namespace cppanim::fundamentals {
 	const char_t blank       = ' ';
 
 	const char_t black = 0;
+	const char_t white = 1;
 
 	//TODO(milevuletic): OS detection, terminal detection,
 	//                   terminal fundamentals (clear, gotoxy)

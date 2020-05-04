@@ -1,8 +1,8 @@
-submodules = src test utils
+submodules = test src utils
 
 root_dir = $(realpath .)
 src_dir = $(root_dir)/src
-test_dir = $(root_dir)/$(src_dir)/test
+test_dir = $(src_dir)/test
 obj_dir = $(root_dir)/obj
 utils_dir = $(root_dir)/utils
 bin_dir = $(root_dir)/bin
@@ -11,7 +11,7 @@ docs_dir = $(root_dir)/docs
 
 CPP = g++
 
-BUILDFLAGS = -I$(include_dir)/
+BUILDFLAGS = -I$(include_dir)
 
 ifeq ($(OS),Windows_NT)
 # Necessary for pthreads to work under MinGW
@@ -38,20 +38,22 @@ LINKFLAGS += -shared $(obj_dir)/*.o
 
 CFLAGS = $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 
-
-all: $(submodules)
-
 # cppanim is an alias for src
 .PHONY: cppanim
 cppanim: src
+
+test: CFLAGS += -Og -g
+test: cppanim
+
+all: $(submodules)
 
 # Utils are built with the library, hence the dependency
 utils: cppanim
 
 .PHONY: clean
 clean:
-	rm -f $(bin_dir)/*
-	rm -f $(obj_dir)/*
+	rm -rf $(bin_dir)/*
+	rm -rf $(obj_dir)/*
 
 .PHONY: cleandocs
 cleandocs:
@@ -62,6 +64,7 @@ mrproper: clean cleandocs
 
 .PHONY: $(submodules)
 export CFLAGS
+export BUILDFLAGS
 export LINKFLAGS
 export CPP
 export obj_dir

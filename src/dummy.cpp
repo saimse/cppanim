@@ -1,4 +1,4 @@
-#include <cppanim.h>
+#include <cppanim.hpp>
 
 int myfun(int a, int b)
 {
