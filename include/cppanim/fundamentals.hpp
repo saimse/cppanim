@@ -1,22 +1,5 @@
 #pragma once
 
-namespace cppanim::fundamentals {
-	//TODO(milevuletic): Determine all char types; Detect them.
-	typedef char char_t;
-
-	// 12 fps (83ms delay) should be enough, and is just slow enough
-	// to be able to print on time on Windows
-	const int framerate = 12;
-
-	const char_t transparent = 0x11;
-	const char_t blank       = ' ';
-
-	const char_t black = 0;
-	const char_t white = 1;
-
-	//TODO(milevuletic): OS detection, terminal detection,
-	//                   terminal fundamentals (clear, gotoxy)
-
 #ifdef _WIN32
 #include <windows.h>
 	#define gotoxy(x, y) { SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), (COORD){(x), (y)}); }
@@ -43,6 +26,30 @@ namespace cppanim::fundamentals {
 #else
 	#error "Unknown host/target"
 #endif
+
+namespace cppanim::fundamentals {
+	//TODO(milevuletic): Determine all char types; Detect them.
+	typedef char char_t;
+
+        #ifdef _WIN32
+            	#define gotoxy(x, y) { SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), (COORD){(x), (y)}); }
+        #else
+                #define gotoxy(x, y) { printf("%c[%d;%df",0x1B, (y), (x)); }
+        #endif
+
+	// 12 fps (83ms delay) should be enough, and is just slow enough
+	// to be able to print on time on Windows
+	const int framerate = 12;
+
+	const char_t transparent = 0x11;
+	const char_t blank       = ' ';
+
+	const char_t black = 0;
+	const char_t white = 1;
+
+	//TODO(milevuletic): OS detection, terminal detection,
+	//                   terminal fundamentals (clear, gotoxy)
+
 
 	void clrscr()
 	{
