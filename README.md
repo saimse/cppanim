@@ -1,4 +1,4 @@
-# cppanim
+# cppanim ![build-status](https://travis-ci.com/saimse/cppanim.svg?branch=master)
 
 Fully-fledged extensible standalone console animation library. Supports
 gif-like animation (with delta-compression), z-axis stacking, transparency,
