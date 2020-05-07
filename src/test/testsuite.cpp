@@ -14,6 +14,11 @@ namespace cppanim::test {
 	TestController::TestController() : units(), resultLock(), results()
 	{}
 
+       	TestController::~TestController()
+	{
+		for(auto u : units) delete u;
+	}
+
 	void TestController::addUnit(Unit *u) { units.push_back(u); }
 	void TestController::emplaceUnit(const std::string& uid,
 					 Unit::result_t (*run)())

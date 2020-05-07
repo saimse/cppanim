@@ -32,7 +32,8 @@ namespace cppanim::test {
 	public:
 
 		TestController();
-
+		~TestController();
+		
 		static TestController& getInstance();
 
 		void addUnit(Unit *u);
