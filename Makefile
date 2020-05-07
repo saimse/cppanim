@@ -36,7 +36,7 @@ else
 endif
 LINKFLAGS += -shared $(obj_dir)/*.o
 
-CFLAGS = $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
+override CFLAGS += $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 
 # cppanim is an alias for src
 .PHONY: cppanim
