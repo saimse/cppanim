@@ -1,0 +1,9 @@
+language: cpp
+os: linux
+dist: bionic
+compiler: gcc
+
+script:
+ - make -j6 && make test
+ - cd bin/
+ - ./test
