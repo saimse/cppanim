@@ -25,18 +25,23 @@ namespace cppanim::test {
 		// success / warning / error
 		std::atomic_int results[3] = {{0}, {0}, {0}};
 
+                #if defined(_WIN32) || defined(NO_OMP)
                 #pragma omp parallel
 		{
 		        #pragma omp for
-			for(auto u : units) {
-				auto result = (*u)();
+		#endif
+		        for(std::size_t i = 0;
+			    i < units.size(); i++) {
+				auto result = (*units[i])();
 				results[result]++;
 				
 				resultLock.lock();
-				this->results[u] = result;
+				this->results[units[i]] = result;
 				resultLock.unlock();
 			}
+		#if defined(_WIN32) || defined(NO_OMP)
 		}
+		#endif		
 		
 		return std::tuple<int, int, int>(results[0].load(),
 						 results[1].load(),
