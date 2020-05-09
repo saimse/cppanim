@@ -1,13 +1,9 @@
-src_files = dummy
+files = $(obj_dir)/animation.o $(obj_dir)/frame.o $(obj_dir)/fundamentals.o
 
 # TODO(milevuletic): implement src makefile
-all: $(src_files)
-	$(CPP) $(LINKFLAGS)
+$(bin_dir)/$(sofilename): $(files)
+	$(CPP) $(CFLAGS) -shared $^ -o $(bin_dir)/$(sofilename)
 	@echo "Done!"
 
-.PHONY: public
-public:
-	$(CPP) $(CFLAGS) -c $(include_dir)/cppanim.hpp
-
-$(src_files):
-	$(CPP) $(CFLAGS) -c $(@F).cpp -o $(obj_dir)/$(@F).o
+%.o: $(notdir %.cpp)
+	$(CPP) -c -o $(obj_dir)/$@ $< $(CFLAGS)
