@@ -5,5 +5,5 @@ $(bin_dir)/$(sofilename): $(files)
 	$(CPP) $(CFLAGS) -shared $^ -o $(bin_dir)/$(sofilename)
 	@echo "Done!"
 
-%.o: $(notdir %.cpp)
-	$(CPP) -c -o $(obj_dir)/$@ $< $(CFLAGS)
+$(obj_dir)/%.o: $(notdir %.cpp)
+	$(CPP) -c -o $(obj_dir)/$(@F) $< $(CFLAGS)
