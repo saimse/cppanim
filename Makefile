@@ -9,6 +9,8 @@ bin_dir = $(root_dir)/bin
 include_dir = $(root_dir)/include
 docs_dir = $(root_dir)/docs
 
+sofilename :=
+
 CPP = g++
 
 BUILDFLAGS = -I$(include_dir)
@@ -16,7 +18,8 @@ BUILDFLAGS = -I$(include_dir)
 ifeq ($(OS),Windows_NT)
 # Necessary for pthreads to work under MinGW
 	OSFLAG += -Wl,-Bstatic -lpthread -Wl,-Bdynamic -w
-	LINKFLAGS += -shared -Wl,--out-implib,$(bin_dir)/libcppanim.dll.a -o $(bin_dir)/libcppanim.dll
+	sofilename = libcppanim.dll
+	LINKFLAGS += -shared -Wl,--out-implib,$(bin_dir)/$(sofilename).a -o $(bin_dir)/$(sofilename)
 
 	ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
 		OSFLAG += -m64
@@ -25,7 +28,8 @@ ifeq ($(OS),Windows_NT)
 		OSFLAG += -m32
 	endif
 else
-	LINKFLAGS += -o $(bin_dir)/libcppanim.so
+	sofilename = libcppanim.so
+	LINKFLAGS += -o $(bin_dir)/$(sofilename)
 	UNAME_P := $(shell uname -p)
 	ifeq ($(UNAME_P),x86_64)
 		OSFLAG += -m64
@@ -42,13 +46,19 @@ override CFLAGS += $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 .PHONY: cppanim
 cppanim: src
 
-test: CFLAGS += -Og -g
-test: cppanim
+debug: CFLAGS += -Og -g
+debug: cleanso src
+
+test: debug
 
 all: $(submodules)
 
 # Utils are built with the library, hence the dependency
 utils: cppanim
+
+.PHONY: cleanso
+cleanso:
+	rm -f $(bin_dir)/$(sofilename)
 
 .PHONY: clean
 clean:
@@ -70,6 +80,8 @@ export CPP
 export obj_dir
 export bin_dir
 export include_dir
+export root_dir
+export sofilename
 $(submodules):
 	@echo "[INFO] Building submodule $(@F)..."
 	@make -C $($(@F)_dir)
