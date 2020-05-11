@@ -9,14 +9,9 @@ using namespace cppanim::gfx;
 using namespace cppanim::fundamentals;
 
 struct DiffBuff {
-	union {
-		struct {
-			std::vector<Symbol> curr;
-			std::vector<Symbol> next;
-			std::vector<Symbol> diff;
-		};
-		std::vector<Symbol> bufs[3];
-	};
+	std::vector<Symbol> curr;
+	std::vector<Symbol> next;
+	std::vector<Symbol> diff;
 
 	XY size;
 	
@@ -34,5 +29,6 @@ struct DiffBuff {
 
 	//DiffBuff() = delete;
 	explicit DiffBuff(XY sz) : curr(sz.x*sz.y),
-				   next(sz.x*sz.y), diff(sz.x*sz.y) {}
+				   next(sz.x*sz.y),
+				   diff(sz.x*sz.y) {}
 };
