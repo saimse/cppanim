@@ -84,7 +84,7 @@ export root_dir
 export sofilename
 $(submodules):
 	@echo "[INFO] Building submodule $(@F)..."
-	@$(MAKE) -C $($(@F)_dir)
+	@"$(MAKE)" -C $($(@F)_dir)
 
 ###################################################
 
