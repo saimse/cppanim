@@ -1,4 +1,4 @@
-files = $(obj_dir)/animation.o $(obj_dir)/frame.o $(obj_dir)/fundamentals.o
+files = $(obj_dir)/animation.o $(obj_dir)/frame.o $(obj_dir)/fundamentals.o $(obj_dir)/diffbuff.o
 
 # TODO(milevuletic): implement src makefile
 $(bin_dir)/$(sofilename): $(files)
