@@ -4,6 +4,6 @@
 
 namespace cppanim::gfx {
         struct Context {
-		clock_t globalClock;
+		cppanim::fundamentals::clock_t globalClock;
 	};
 }
