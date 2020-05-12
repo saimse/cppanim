@@ -94,7 +94,7 @@ namespace cppanim::fundamentals {
 	char getch_() 
 	{
 		char ch;
-		initTermios(1);
+		initTermios(0);
 		ch = getchar();
 		resetTermios();
 		return ch;
