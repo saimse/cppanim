@@ -18,9 +18,12 @@ namespace cppanim::gfx {
 		draw(const Context& c)=0;
 
 		const fundamentals::XY& getSize() const { return size; }
-		
+
 		const fundamentals::XY& getPosition() const
 			{ return position; }
 		const std::size_t& getZIndex() const { return zIndex; }
+
+		virtual bool operator<(const Drawable &rhs) const final
+			{ return zIndex < rhs.zIndex; }
 	};
 }
