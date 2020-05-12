@@ -7,18 +7,26 @@
 
 namespace cppanim::util {
 
-	template<typename T>
+	template<typename T, class C = GenericListener<T>>
 	class GenericBroadcaster {
-		std::vector<const GenericListener<T> *> listeners;
+	protected:
+		std::vector<GenericListener<T> *> listeners;
 	public:
-		virtual void registerListener(const GenericListener<T>& l)
+		virtual void registerListener(C& l)
 		{
 			listeners.push_back(&l);
 		}
+
+		GenericBroadcaster() : listeners() {}
+		explicit GenericBroadcaster(
+			std::initializer_list<C *> i)
+			: listeners(i) {}
+			
 	};
 
 	template<typename T>
-	using EventBroadcaster = GenericBroadcaster<Event<T>>;
+	using EventBroadcaster = GenericBroadcaster<Event<T>,
+						    EventListener<T>>;
 
 	using KeyboardBroadcaster = GenericBroadcaster<KeyboardEvent>;
 	

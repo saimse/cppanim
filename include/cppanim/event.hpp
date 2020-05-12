@@ -19,10 +19,13 @@ namespace cppanim::util {
 			E_KEYBOARD_META,
 			E_KEYBOARD_SUPER
 		};
-	        uint8_t stateFlags;
+		uint8_t stateFlags;
 
 		bool isState(enum KeyboardState flag)
 		{ return stateFlags & flag; }
+
+		void setState(enum KeyboardState flag)
+		{ stateFlags &= flag; }
 	};
-	
+
 }
