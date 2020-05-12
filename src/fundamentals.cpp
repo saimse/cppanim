@@ -72,7 +72,35 @@ namespace cppanim::fundamentals {
         #endif
 	}
 
-	
+	#ifdef _WIN32
+	char getch_() { return getch(); }
+	#else
+	static struct termios old, current;
+	static inline void initTermios(int echo) 
+	{
+		tcgetattr(0, &old);
+		current = old;
+		current.c_lflag &= ~ICANON; /* disable buffered i/o */
+		if (echo) {
+			current.c_lflag |= ECHO; /* set echo mode */
+		} else {
+			current.c_lflag &= ~ECHO; /* set no echo mode */
+		}
+		tcsetattr(0, TCSANOW, &current);
+	}
+
+	static inline void resetTermios(void){ tcsetattr(0, TCSANOW, &old); }
+
+	char getch_() 
+	{
+		char ch;
+		initTermios(1);
+		ch = getchar();
+		resetTermios();
+		return ch;
+	}
+
+        #endif
 
 	
 }
