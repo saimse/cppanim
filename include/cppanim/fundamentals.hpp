@@ -1,11 +1,13 @@
 #pragma once
 
 #ifdef _WIN32
+        #include <conio.h>
         #include <windows.h>
 #elif defined(__APPLE__)
 	#error "Unsupported platform"
 #elif defined(__linux__) || defined(__unix__) || defined(_POSIX_VERSION)
-	#include <stdio.h>
+        #include <termios.h>
+        #include <stdio.h>
 	#include <sys/ioctl.h>
 	#include <unistd.h>
 	#include <time.h>
@@ -16,6 +18,8 @@
 namespace cppanim::fundamentals {
 
 	inline void gotoxy(int x, int y);
+
+	char getch_();
 		
 	//TODO(milevuletic): Determine all char types; Detect them.
 	typedef char char_t;
