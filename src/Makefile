@@ -7,3 +7,5 @@ $(bin_dir)/$(sofilename): $(files)
 
 $(obj_dir)/%.o: $(notdir %.cpp)
 	$(CPP) -c -o $(obj_dir)/$(@F) $< $(CFLAGS)
+
+%.cpp: %.hpp
