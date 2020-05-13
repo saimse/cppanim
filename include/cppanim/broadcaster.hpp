@@ -10,7 +10,7 @@ namespace cppanim::util {
 	template<typename T, class C = GenericListener<T>>
 	class GenericBroadcaster {
 	protected:
-		std::vector<GenericListener<T> *> listeners;
+		std::vector<C *> listeners;
 	public:
 		virtual void registerListener(C& l)
 		{
