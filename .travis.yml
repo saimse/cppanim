@@ -43,5 +43,5 @@ cache:
 script:
  - make -j6 && make test
  - cd bin/
- - nm -C libconanim.so
+ - nm -C libcppanim.so
  - ./test
