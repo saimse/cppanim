@@ -19,7 +19,7 @@ namespace cppanim::fundamentals {
 
 	inline void gotoxy(int x, int y);
 
-	char getch_();
+        char getch_();
 
 	//TODO(milevuletic): Determine all char types; Detect them.
 	typedef char char_t;
