@@ -72,9 +72,7 @@ namespace cppanim::fundamentals {
         #endif
 	}
 
-	#ifdef _WIN32
-	char getch_() { return getch(); }
-	#else
+	#ifndef _WIN32
 	static struct termios old, current;
 	static inline void initTermios(int echo) 
 	{
@@ -91,16 +89,21 @@ namespace cppanim::fundamentals {
 
 	static inline void resetTermios(void){ tcsetattr(0, TCSANOW, &old); }
 
+	#endif
+
+	__attribute__((visibility("default")))
 	char getch_() 
 	{
+		#ifdef _WIN32
+		return getch();
+		#else
 		char ch;
 		initTermios(0);
 		ch = getchar();
 		resetTermios();
 		return ch;
+		#endif
 	}
-
-        #endif
 
 	
 }
