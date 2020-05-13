@@ -17,9 +17,9 @@ namespace cppanim::util {
 		enum KeyboardState {
 			E_KEYBOARD_CONTROL = 0x1,
 			E_KEYBOARD_META,
-			E_KEYBOARD_SUPER
+			E_KEYBOARD_SUPER = 4
 		};
-		uint8_t stateFlags;
+		uint8_t stateFlags;		
 
 		bool isState(enum KeyboardState flag)
 		{ return stateFlags & flag; }
