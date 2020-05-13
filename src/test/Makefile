@@ -1,15 +1,10 @@
-src_files = testsuite tester
+files = $(obj_dir)/testsuite.o $(obj_dir)/tester.o
 
-# TODO(milevuletic): implement test suite makefile
-all: prepare $(src_files)
-	$(CPP) -fopenmp -Wl,-rpath,. -L$(bin_dir) -lcppanim $(obj_dir)/test/*.o -o $(bin_dir)/test
-	@cd $(bin_dir)
-#test
-
-.PHONY: prepare
-prepare:
+$(bin_dir)/test: $(files)
 	@mkdir $(obj_dir)/test -p
+	$(CPP) -fopenmp -Wl,-rpath,. -L$(bin_dir) -lcppanim $^ -o $@
 
-#.PHONY: $(src_files)
-$(src_files):
-	$(CPP) -fopenmp -L$(bin_dir) -lcppanim $(BUILDFLAGS) -c $(@F).cpp -o $(obj_dir)/test/$(@F).o
+$(obj_dir)/%.o: $(notdir %.cpp)
+	$(CPP) -c -o $(obj_dir)/$(@F) $< $(CFLAGS)
+
+%.cpp: testsuite.hpp
