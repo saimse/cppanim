@@ -1,9 +1,9 @@
 #include "testsuite.hpp"
 
-#include <cppanim.hpp>
-
 using namespace cppanim::test;
 
+#include <cppanim/fundamentals.hpp>
+#include <cppanim/symbol.hpp>
 Unit::result_t symbol_test()
 {
 	cppanim::gfx::Symbol x('a', cppanim::fundamentals::white);
