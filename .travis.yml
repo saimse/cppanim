@@ -42,6 +42,4 @@ cache:
 
 script:
  - make -j6 && make test
- - cd bin/
- - nm -CD libcppanim.so
- - ./test
+ - cd bin/ && ./test
