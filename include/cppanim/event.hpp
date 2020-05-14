@@ -15,10 +15,19 @@ namespace cppanim::util {
 
 	struct KeyboardEvent : public Event<char> {
 		enum KeyboardState {
-			E_KEYBOARD_CONTROL = 0x1,
-			E_KEYBOARD_META,
+			E_KEYBOARD_CONTROL = 1,
+			E_KEYBOARD_META = 2,
 			E_KEYBOARD_SUPER = 4
 		};
+
+		bool isSpecialKey = false;
+		enum SpecialKey {
+			E_KEYBOARD_ARR_UP,
+			E_KEYBOARD_ARR_DOWN,
+			E_KEYBOARD_ARR_LEFT,
+			E_KEYBOARD_ARR_RIGHT,
+		} specialKey;
+		
 		uint8_t stateFlags;		
 
 		bool isState(enum KeyboardState flag)
