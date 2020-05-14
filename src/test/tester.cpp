@@ -111,7 +111,6 @@ int main(int argc, char **argv)
 	t.emplaceUnit("Symbol test", symbol_test);
 	t.emplaceUnit("Int event broadcaster/listener",
 		      eventBroadcasterListener_test);
-	t.emplaceUnit("Screen kbevent handling", screenInputHandling_test);
 
 	//TODO: this is just dumb
 	bool interactiveTests = false;
@@ -126,6 +125,8 @@ int main(int argc, char **argv)
 
 	if(interactiveTests) {
 		t.emplaceUnit("Getch test", getch_test);
+		t.emplaceUnit("Screen kbevent handling",
+			      screenInputHandling_test);
 	}
 
 	int s, w, e;
