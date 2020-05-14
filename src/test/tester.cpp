@@ -74,6 +74,34 @@ Unit::result_t eventBroadcasterListener_test()
 	return Unit::error;
 }
 
+#include "../screen.hpp"
+Unit::result_t screenInputHandling_test()
+{
+	Screen s;
+
+	class MyKBListener : public KeyboardListener {
+	public:
+		bool success = false;
+		virtual void onEvent(const KeyboardEvent& e) override {
+			if(e.isSpecialKey
+			   && e.specialKey
+			   == KeyboardEvent::E_KEYBOARD_TAB) {
+				success = true;
+			}
+		}
+	} l;
+
+	s.registerListener(l);
+
+	//s.handleInput();
+
+	if(l.success)
+		return Unit::success;
+	
+	return Unit::warning;
+}
+
+
 #include <string.h>
 
 int main(int argc, char **argv)
@@ -83,6 +111,7 @@ int main(int argc, char **argv)
 	t.emplaceUnit("Symbol test", symbol_test);
 	t.emplaceUnit("Int event broadcaster/listener",
 		      eventBroadcasterListener_test);
+	t.emplaceUnit("Screen kbevent handling", screenInputHandling_test);
 
 	//TODO: this is just dumb
 	bool interactiveTests = false;

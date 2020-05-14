@@ -17,7 +17,8 @@ namespace cppanim::util {
 		enum KeyboardState {
 			E_KEYBOARD_CONTROL = 1,
 			E_KEYBOARD_META = 2,
-			E_KEYBOARD_SUPER = 4
+			E_KEYBOARD_SUPER = 4,
+			E_KEYBOARD_SHIFT = 8,
 		};
 
 		bool isSpecialKey = false;
@@ -26,6 +27,9 @@ namespace cppanim::util {
 			E_KEYBOARD_ARR_DOWN,
 			E_KEYBOARD_ARR_LEFT,
 			E_KEYBOARD_ARR_RIGHT,
+			E_KEYBOARD_BSPACE,
+			E_KEYBOARD_TAB,
+			E_KEYBOARD_ENTER,
 		} specialKey;
 		
 		uint8_t stateFlags;		
