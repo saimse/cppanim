@@ -30,7 +30,7 @@ namespace cppanim::test {
 		// success / warning / error
 		std::atomic_int results[3] = {{0}, {0}, {0}};
 
-                #if defined(_WIN32) || defined(NO_OMP)
+                #if !defined(_WIN32) || !defined(NO_OMP)
                 #pragma omp parallel
 		{
 		        #pragma omp for
@@ -44,7 +44,7 @@ namespace cppanim::test {
 				this->results[units[i]] = result;
 				resultLock.unlock();
 			}
-		#if defined(_WIN32) || defined(NO_OMP)
+		#if !defined(_WIN32) || !defined(NO_OMP)
 		}
 		#endif		
 		

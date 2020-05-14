@@ -5,6 +5,6 @@ $(bin_dir)/test: $(files)
 	$(CPP) -fopenmp -Wl,-rpath,. $^ -o $@ -L$(bin_dir) -lcppanim
 
 $(obj_dir)/%.o: $(notdir %.cpp)
-	$(CPP) -c -o $@ $< $(CFLAGS) -Wall
+	$(CPP) -fopenmp -c -o $@ $< $(CFLAGS) -Wall
 
 %.cpp: testsuite.hpp
