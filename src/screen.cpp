@@ -102,13 +102,10 @@ namespace cppanim::gfx {
 			e.data = c;
 		}
 
-		//TODO: this is UB
-		fflush(stdin);
-
 		for(auto l : listeners) {
 			l->onEvent(e);
 		}
 	}
-	#endif
+#endif
 	
 }
