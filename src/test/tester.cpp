@@ -85,7 +85,7 @@ Unit::result_t screenInputHandling_test()
 		virtual void onEvent(const KeyboardEvent& e) override {
 			if(e.isSpecialKey
 			   && e.specialKey
-			   == KeyboardEvent::E_KEYBOARD_TAB) {
+			   == KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
 				success = true;
 			}
 		}
@@ -93,7 +93,7 @@ Unit::result_t screenInputHandling_test()
 
 	s.registerListener(l);
 
-	//s.handleInput();
+	//	s.handleInput();
 
 	if(l.success)
 		return Unit::success;
@@ -124,7 +124,7 @@ int main(int argc, char **argv)
 	}
 
 	if(interactiveTests) {
-		t.emplaceUnit("Getch test", getch_test);
+		//	t.emplaceUnit("Getch test", getch_test);
 		t.emplaceUnit("Screen kbevent handling",
 			      screenInputHandling_test);
 	}
