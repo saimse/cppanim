@@ -197,9 +197,10 @@ namespace cppanim::gfx {
 
 		// This disables echoing and turns off canonical mode.
 		// While in non-canonical mode, read(2) will be non-blocking
+		// TODO: move into global init, reset in dtor/sighandler
 		initTermios(0);
 
-		inbuf.size = read(0, inbuf.buf, bufsize - inbuf.size);
+		inbuf.size = read(0, inbuf.buf, bufsize - 1);
 
 		// Buffer might have more than one inputted character,
 		// so, reparse until you fail. Then, flush.
