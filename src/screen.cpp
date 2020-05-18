@@ -1,4 +1,4 @@
-#include "screen.hpp"
+#include <cppanim/screen.hpp>
 
 #include <algorithm>
 #include <stdio.h>
