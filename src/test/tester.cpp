@@ -74,6 +74,34 @@ Unit::result_t eventBroadcasterListener_test()
 	return Unit::error;
 }
 
+#include "../screen.hpp"
+Unit::result_t screenInputHandling_test()
+{
+	Screen s;
+
+	class MyKBListener : public KeyboardListener {
+	public:
+		bool success = false;
+		virtual void onEvent(const KeyboardEvent& e) override {
+			if(e.isSpecialKey
+			   && e.specialKey
+			   == KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
+				success = true;
+			}
+		}
+	} l;
+
+	s.registerListener(l);
+
+	//	s.handleInput();
+
+	if(l.success)
+		return Unit::success;
+	
+	return Unit::warning;
+}
+
+
 #include <string.h>
 
 int main(int argc, char **argv)
@@ -96,7 +124,9 @@ int main(int argc, char **argv)
 	}
 
 	if(interactiveTests) {
-		t.emplaceUnit("Getch test", getch_test);
+		//	t.emplaceUnit("Getch test", getch_test);
+		t.emplaceUnit("Screen kbevent handling",
+			      screenInputHandling_test);
 	}
 
 	int s, w, e;

@@ -3,13 +3,13 @@
 namespace cppanim::fundamentals {
 
 	#ifdef _WIN32
-        	inline void gotoxy(int x, int y)
+		inline void gotoxy(int x, int y)
 		{ SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
 					   (COORD){(x), (y)}); }
-        #else
-	        inline void gotoxy(int x, int y)
+	#else
+		inline void gotoxy(int x, int y)
 		{ printf("%c[%d;%df",0x1B, (y), (x)); }
-        #endif
+	#endif
 
 	void clrscr()
 	{
@@ -53,28 +53,28 @@ namespace cppanim::fundamentals {
 					   &csbi);
 		xy = (XY){csbi.srWindow.Right - csbi.srWindow.Left + 1,
 			  csbi.srWindow.Bottom - csbi.srWindow.Top + 1};
-        #else
+	#else
 		struct winsize w;
 		ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 		xy = (XY){ w.ws_col, w.ws_row };
-        #endif
+	#endif
 		return xy;
 	}
 
 
 	void sleep(int milliseconds)
 	{
-        #ifdef _WIN32
+	#ifdef _WIN32
 		Sleep(milliseconds);
-        #else
+	#else
 		struct timespec t = {0, 1000*milliseconds};
 		nanosleep(&t, NULL);
-        #endif
+	#endif
 	}
 
 	#ifndef _WIN32
 	static struct termios old, current;
-	static inline void initTermios(int echo) 
+	static inline void initTermios(int echo)
 	{
 		tcgetattr(0, &old);
 		current = old;
@@ -92,7 +92,7 @@ namespace cppanim::fundamentals {
 	#endif
 
 	__attribute__((visibility("default")))
-	char getch_() 
+	char getch_()
 	{
 		#ifdef _WIN32
 		return getch();
@@ -105,5 +105,15 @@ namespace cppanim::fundamentals {
 		#endif
 	}
 
-	
+	bool iskbhit()
+	{
+		#ifdef _WIN32
+		return kbhit();
+		#else
+		int n;
+		return ioctl(0, FIONREAD, &n) == 0 && n > 0;
+		#endif
+	}
+
+
 }
