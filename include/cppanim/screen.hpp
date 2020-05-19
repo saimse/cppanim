@@ -40,7 +40,7 @@ namespace cppanim::gfx {
 			static Screen instance;
 			return instance;
 		}
-		void operator=(const& Screen) = delete;
+		void operator=(const Screen&) = delete;
 		Screen(const Screen&) = delete;
 
 		void addDrawable(const Drawable &d);
