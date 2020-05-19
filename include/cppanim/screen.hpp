@@ -4,9 +4,8 @@
 #include <cppanim/drawable.hpp>
 #include <cppanim/broadcaster.hpp>
 
-#include <cppanim/diffbuff.hpp>
 #include <memory>
-
+#include <experimental/propagate_const>
 #include <vector>
 
 namespace cppanim::gfx {
@@ -16,24 +15,13 @@ namespace cppanim::gfx {
 
 	class Screen : public KeyboardBroadcaster {
 
-		XY screenSize;
-		DiffBuff diffbuff;
-
-		std::vector<const Drawable *> objects;
-
-		clock_t globalClock = 0;
-
-		// true after addDrawable(); sort flag
-		bool recentlyAdded = false;
-
-		bool isRunning = false;
-		bool isPaused = false;
+		struct impl;
+		std::experimental::propagate_const<
+			std::unique_ptr<
+				impl>> pImpl;
 
 		void handleInput();
-		
-		Screen() : screenSize(getWindowSize()),
-			   diffbuff(screenSize),
-			   objects() {}
+		Screen();
 	public:
 		static Screen& getInstance()
 		{
@@ -44,6 +32,8 @@ namespace cppanim::gfx {
 		Screen(const Screen&) = delete;
 
 		void addDrawable(const Drawable &d);
+
+		~Screen();
 	};
-	
+
 }

@@ -3,12 +3,39 @@
 #include <algorithm>
 #include <stdio.h>
 
+#include "diffbuff.hpp"
+
 namespace cppanim::gfx {
+
+	using namespace cppanim::fundamentals;
+	using namespace cppanim::util;
+	
+	struct Screen::impl {
+		XY screenSize;
+		DiffBuff diffbuff;
+
+		std::vector<const Drawable *> objects;
+
+		clock_t globalClock = 0;
+
+		// true after addDrawable(); sort flag
+		bool recentlyAdded = false;
+
+		bool isRunning = false;
+		bool isPaused = false;
+
+		void addDrawable(const Drawable &d) {
+			objects.push_back(&d);
+			std::sort(objects.begin(), objects.end());
+		}
+
+		impl() : screenSize(getWindowSize()), diffbuff(screenSize),
+			 objects() {}
+	};
 
 	void Screen::addDrawable(const Drawable &d)
 	{
-		objects.push_back(&d);
-		std::sort(objects.begin(), objects.end());
+		pImpl->addDrawable(d);
 	}
 
 	void Screen::handleInput()
@@ -38,5 +65,8 @@ namespace cppanim::gfx {
 			l->onEvent(e);
 		}
 	}
+
+	Screen::Screen() : pImpl{std::make_unique<impl>()} {}
+	Screen::~Screen() = default;	
 
 }
