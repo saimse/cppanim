@@ -46,7 +46,7 @@ override CFLAGS += $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 .PHONY: cppanim
 cppanim: src
 
-debug: CFLAGS += -Og -g
+debug: CFLAGS += -O0 -g
 debug: cleanso src
 
 test: debug
