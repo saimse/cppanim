@@ -74,18 +74,18 @@ Unit::result_t eventBroadcasterListener_test()
 	return Unit::error;
 }
 
-#include "../screen.hpp"
+#include <cppanim/screen.hpp>
 Unit::result_t screenInputHandling_test()
 {
-	Screen s;
+	cppanim::gfx::Screen &s = cppanim::gfx::Screen::getInstance();
 
-	class MyKBListener : public KeyboardListener {
+	class MyKBListener : public cppanim::util::KeyboardListener {
 	public:
 		bool success = false;
-		virtual void onEvent(const KeyboardEvent& e) override {
+		virtual void onEvent(const cppanim::util::KeyboardEvent& e) override {
 			if(e.isSpecialKey
 			   && e.specialKey
-			   == KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
+			   == cppanim::util::KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
 				success = true;
 			}
 		}
