@@ -39,8 +39,12 @@ void DiffBuff::swapAndClear()
 void DiffBuff::generateDiff()
 {
 	for(int i = 0; i < size.x * size.y; ++i){
-		if(!(next[i] == curr[i])){
-			diff[i] = next[i];
+		if((next[i] != curr[i])){
+			if(next[i] == transparent) {
+				diff[i] = ' ';
+			} else {
+				diff[i] = next[i];
+			}
 		}
 	}
 }
