@@ -17,7 +17,7 @@
 
 namespace cppanim::fundamentals {
 
-	inline void gotoxy(int x, int y);
+	void gotoxy(int x, int y);
 
         char getch_();
 	bool iskbhit();
