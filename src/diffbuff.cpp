@@ -21,6 +21,11 @@ Symbol& DiffBuff::operator[](std::size_t n)
 	return getNext(n);
 }
 
+Symbol& DiffBuff::operator[](XY xy)
+{
+	return operator[](xy.y * size.x + xy.x);
+}
+
 void DiffBuff::swapAndClear()
 {
 	curr = next;

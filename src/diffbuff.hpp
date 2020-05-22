@@ -21,6 +21,7 @@ struct DiffBuff {
 	
 	// Get Symbol in `next' buffer
 	Symbol& operator[](std::size_t n);
+	Symbol& operator[](XY xy);
 
 	void swapAndClear();
 	void generateDiff();
