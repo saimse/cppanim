@@ -1,6 +1,7 @@
-files = $(obj_dir)/testsuite.o $(obj_dir)/tester.o
+files = testsuite tester
+objects = $(addprefix $(obj_dir)/, $(addsuffix .o,$(files)))
 
-$(bin_dir)/test: $(files)
+$(bin_dir)/test: $(objects)
 	@mkdir $(obj_dir)/test -p
 	$(CPP) -fopenmp -Wl,-rpath,. $^ -o $@ -L$(bin_dir) -lcppanim
 
