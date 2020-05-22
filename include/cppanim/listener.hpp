@@ -6,7 +6,7 @@ namespace cppanim::util {
 
 	template<typename T>
 	struct GenericListener {
-		virtual void onEvent(const T&);
+		virtual void onEvent(const T&) = 0;
 	};
 
 	template<typename T>
