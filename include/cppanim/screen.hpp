@@ -31,7 +31,13 @@ namespace cppanim::gfx {
 		void operator=(const Screen&) = delete;
 		Screen(const Screen&) = delete;
 
-		void addDrawable(const Drawable &d);
+		void addDrawable(Drawable &d);
+
+		void start();
+		void stop();
+		void wait();
+		void pause();
+		void unpause();
 
 		~Screen();
 	};

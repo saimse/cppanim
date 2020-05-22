@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <stdio.h>
+#include <thread>
 
 #include "diffbuff.hpp"
 
@@ -18,34 +19,145 @@ namespace cppanim::gfx {
 
 	using namespace cppanim::fundamentals;
 	using namespace cppanim::util;
-	
+
 	struct Screen::impl {
 		XY screenSize;
 		DiffBuff diffbuff;
 
-		std::vector<const Drawable *> objects;
+		std::vector<Drawable *> objects;
 
 		clock_t globalClock = 0;
 
-		// true after addDrawable(); sort flag
-		bool recentlyAdded = false;
+		std::unique_ptr<std::thread> drawingThread;
 
 		bool isRunning = false;
 		bool isPaused = false;
 
-		void addDrawable(const Drawable &d) {
+		void addDrawable(Drawable &d) {
 			objects.push_back(&d);
-			std::sort(objects.begin(), objects.end());
+			sortDrawables();
 		}
+
+		void start()
+		{
+			isRunning = true;
+			drawingThread.reset(new std::thread([&](){
+				while(isRunning) {
+					Screen& s = Screen::getInstance();
+
+					if(isPaused)
+						continue;
+
+					sortDrawables();
+
+					XY screenWH = getWindowSize();
+					if(screenWH.x != screenSize.x
+					   || screenWH.y != screenSize.y) {
+						diffbuff.resize(screenWH);
+						screenWH = screenSize;
+					}
+
+					generateBufferFromDrawables();
+					drawToScreen();
+
+					globalClock++;
+					sleep(1000 / framerate);
+				}
+			}));
+		}
+
+		void stop() { isRunning = false; }
+		void wait() { stop(); drawingThread->join(); }
+		void pause() { isPaused = true; }
+		void unpause() { isPaused = false; }
 
 		impl() : screenSize(getWindowSize()), diffbuff(screenSize),
 			 objects() {}
+
+	private:
+		static inline bool compareDrawables(Drawable *l, Drawable *r)
+		{
+			return l->getZIndex() < r->getZIndex();
+		}
+
+		void sortDrawables()
+		{
+			std::sort(objects.begin(), objects.end(), compareDrawables);
+		}
+
+		inline bool isWithinBounds(const XY& coords) const
+		{
+			return (( coords.x >= 0
+				  && coords.x < screenSize.x )
+				&& (coords.y >= 0
+				    && coords.y < screenSize.y ));
+		}
+
+		void generateBufferFromDrawables()
+		{
+			for(auto d : objects) {
+				auto context = generateContext();
+
+				d->update(context);
+				auto tuple = d->draw(context);
+
+				const Frame& f = std::get<0>(tuple);
+				const XY& xy   = std::get<1>(tuple);
+
+				if(!isWithinBounds(xy)) continue;
+
+				auto drawPos = d->getPosition();
+				auto drawSz  = d->getSize();
+
+				// translated from conanim; probably works
+				for(int j = 0; j < std::min(drawSz.y, screenSize.y - drawPos.y); j++) {
+					for(int k = 0; k < std::min(drawSz.x, screenSize.x - drawPos.x); k++) {
+						auto currSym = f.at(xy, {k, j});
+						if(!(currSym == transparent)) {
+							diffbuff[{k + drawPos.x, j + drawPos.y}] = currSym;
+						}
+					}
+				}
+			}
+		}
+
+		static inline void drawSymbol(const Symbol &s)
+		{
+			// TODO: Implement color printing
+			printf("%c", s.symbol);
+		}
+
+		void drawToScreen()
+		{
+			diffbuff.generateDiff();
+
+			for(int i = 0; i < screenSize.x*screenSize.y; i++) {
+				if(diffbuff.getNext(i) != transparent) {
+					gotoxy(i % screenSize.x, i / screenSize.x);
+					drawSymbol(diffbuff.getNext(i));
+				}
+			}
+
+			diffbuff.swapAndClear();
+		}
+
+		Context generateContext()
+		{
+			return {
+				globalClock,
+			};
+		}
 	};
 
-	void Screen::addDrawable(const Drawable &d)
+	void Screen::addDrawable(Drawable &d)
 	{
 		pImpl->addDrawable(d);
 	}
+
+	void Screen::stop() { pImpl->stop(); }
+	void Screen::wait() { pImpl->wait(); }
+	void Screen::pause() { pImpl->pause(); }
+	void Screen::unpause() { pImpl->unpause(); }
 
 #ifdef _WIN32
 #define S(m)					\
@@ -257,6 +369,6 @@ namespace cppanim::gfx {
 #endif
 
   Screen::Screen() : pImpl{std::make_unique<impl>()} {}
-	Screen::~Screen() = default;	
-  
+  Screen::~Screen() = default;
+
 }
