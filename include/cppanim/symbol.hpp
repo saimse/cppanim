@@ -37,6 +37,12 @@ namespace cppanim::gfx {
 		
 		bool operator==(const Symbol& s)
 		{ return (symbol == s.symbol) && (color == s.color); }
+
+		bool operator!=(fundamentals::char_t s)
+		{ return !(operator==)(s); }
+
+		bool operator!=(const Symbol& s)
+		{ return !(operator==)(s); }
 	};
 	
 }
