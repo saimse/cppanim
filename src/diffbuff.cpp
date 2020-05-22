@@ -54,6 +54,10 @@ void DiffBuff::resize(XY newsize)
 	curr.clear();
 	next.clear();
 	diff.clear();
-	size.x = newsize.x;
-	size.y = newsize.y;
+
+	curr.reserve(newsize.x * newsize.y);
+        next.reserve(newsize.x * newsize.y);
+        diff.reserve(newsize.x * newsize.y);
+	
+	size = newsize;
 }
