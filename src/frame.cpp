@@ -8,6 +8,12 @@ namespace cppanim::gfx {
 	Frame::Frame(XY xy, const Symbol &s)
 		: buffer(xy.x*xy.y, s) {}
 
+        Frame::Frame(const std::vector<Symbol>& copy)
+		: buffer(copy) {}
+
+	Frame::Frame(std::initializer_list<Symbol> l)
+		: buffer(l) {}
+	
 	const Symbol& Frame::operator[](size_t n) const
 	{ return buffer[n]; }
 
