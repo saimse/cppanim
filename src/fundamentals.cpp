@@ -2,14 +2,14 @@
 
 namespace cppanim::fundamentals {
 
-	#ifdef _WIN32
-		inline void gotoxy(int x, int y)
-		{ SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
-					   (COORD){(x), (y)}); }
-	#else
-		inline void gotoxy(int x, int y)
-		{ printf("%c[%d;%df",0x1B, (y), (x)); }
-	#endif
+	// #ifdef _WIN32
+	// 	void gotoxy(int x, int y)
+	// 	{ SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
+	// 				   (COORD){(x), (y)}); }
+	// #else
+	//         void gotoxy(int x, int y)
+	// 	{ printf("%c[%d;%dH",0x1B, (y-1), (x-1)); }
+	// #endif
 
 	void clrscr()
 	{
@@ -67,7 +67,8 @@ namespace cppanim::fundamentals {
 	#ifdef _WIN32
 		Sleep(milliseconds);
 	#else
-		struct timespec t = {0, 1000*milliseconds};
+		struct timespec t = {milliseconds/1000,
+				     milliseconds%1000*1000000};
 		nanosleep(&t, NULL);
 	#endif
 	}
