@@ -15,7 +15,7 @@ MKDIRCMD := mkdir
 
 CPP = g++
 
-BUILDFLAGS = -I$(include_dir)
+BUILDFLAGS = -I$(include_dir) -lpthread
 
 ifeq ($(OS),Windows_NT)
 # Necessary for pthreads to work under MinGW
