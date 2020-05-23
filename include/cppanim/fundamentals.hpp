@@ -17,7 +17,14 @@
 
 namespace cppanim::fundamentals {
 
-	void gotoxy(int x, int y);
+	#ifdef _WIN32
+		inline void gotoxy(int x, int y)
+		{ SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
+					   (COORD){(x), (y)}); }
+	#else
+	        inline void gotoxy(int x, int y)
+		{ printf("%c[%d;%dH",0x1B, (y+1), (x+1)); }
+	#endif
 
         char getch_();
 	bool iskbhit();
