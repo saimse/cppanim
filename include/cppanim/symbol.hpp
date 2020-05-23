@@ -12,9 +12,10 @@ namespace cppanim::gfx {
 			   color(fundamentals::black) {}
 		Symbol(fundamentals::char_t s, int c) : symbol(s), color(c)
 		{}
-		explicit Symbol(fundamentals::char_t s) : symbol(s),
+		Symbol(fundamentals::char_t s) : symbol(s),
 						 color(fundamentals::black)
 		{}
+
 		
 		void operator=(fundamentals::char_t newSymbol)
 		{ this->symbol = newSymbol; }
