@@ -31,5 +31,6 @@ struct DiffBuff {
 	//DiffBuff() = delete;
 	explicit DiffBuff(XY sz) : curr(sz.x*sz.y),
 				   next(sz.x*sz.y),
-				   diff(sz.x*sz.y) {}
+				   diff(sz.x*sz.y),
+				   size(sz) {}
 };
