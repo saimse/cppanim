@@ -4,33 +4,47 @@
 
 namespace cppanim::gfx {
 
-        Animation::Animation(XY size, std::size_t duration)
-                             : duration(duration), data(duration, Frame(size))
-                             , playRate(1)
-        {
-                data.reserve(duration);
-        }
 
-        Animation::Animation(XY size, std::size_t duration, float playRate)
-                             : duration(duration), data(duration, Frame(size))
+        Animation::Animation(XY size, std::size_t duration, float playRate,
+		             XY position, int zIndex)
+                             : duration(duration)
+			     , data(duration, Frame(size))
                              , playRate(playRate)
         {
                 data.reserve(duration);
+		this->size = size;
+		this->position = position;
+		this->zIndex = zIndex;
         }
 
         Animation::Animation(const Animation& copy) : duration(copy.duration)
                                                       , data(copy.data),
                                                       playRate(copy.playRate)
-                                                      {}
+        {
+		this->size = copy.size;
+		this->position = copy.position;
+		this->zIndex = copy.zIndex;
+	}
 
-        Animation::Animation(const std::vector<Frame> &data)
+        Animation::Animation(XY size, const std::vector<Frame> &data,
+			     float playRate, XY position, int zIndex)
                                         : duration(data.size()), data(data),
-                                          playRate(1) {}
+                                          playRate(playRate)
+	{
+		this->size = size;
+		this->position = position;
+		this->zIndex = zIndex;
+	}
 
-        Animation::Animation(const std::vector<Frame> &data, float playRate)
-                                        : duration(data.size()), data(data),
-                                          playRate(playRate) {}
-
+	Animation::Animation(XY size, std::initializer_list<Frame> l,
+			     float playRate, XY position, int zIndex)
+		: data(l), duration(data.size()), playRate(playRate)
+	{
+		this->size = size;
+		this->position = position;
+		this->zIndex = zIndex;
+	}
+	
 	const std::size_t& Animation::getDuration() const { return duration;}
 	_cppanim_getterDefin(Animation, float, playRate, getPlayRate);
 	void Animation::setPlayRate(float p) { playRate = p; }
