@@ -14,11 +14,20 @@
 #include <unistd.h>
 #endif
 
+#include <iostream>
 
 namespace cppanim::gfx {
 
 	using namespace cppanim::fundamentals;
 	using namespace cppanim::util;
+
+	static inline void drawSymbol(const Symbol &s)
+	{
+		// TODO: Implement color printing
+		//	printf("asd\n");
+		//std::cout << s.symbol;
+		printf("%c", s.symbol);
+	}
 
 	struct Screen::impl {
 		XY screenSize;
@@ -41,12 +50,16 @@ namespace cppanim::gfx {
 		void start()
 		{
 			isRunning = true;
+			clrscr();
 			drawingThread.reset(new std::thread([&](){
 				while(isRunning) {
-					Screen& s = Screen::getInstance();
+					//std::cout.flush();
+					//std::cout << std::endl;
+					//fflush(stdout);
 
-					if(isPaused)
+					if(isPaused) {
 						continue;
+					}
 
 					sortDrawables();
 
@@ -58,10 +71,17 @@ namespace cppanim::gfx {
 					}
 
 					generateBufferFromDrawables();
+
+					//std::cout << std::endl;
+					//printf("\n");
 					drawToScreen();
+					//getch_();
 
 					globalClock++;
-					sleep(1000 / framerate);
+
+					cppanim::fundamentals::sleep(
+						1000 / framerate
+					);
 				}
 			}));
 		}
@@ -72,17 +92,16 @@ namespace cppanim::gfx {
 		void unpause() { isPaused = false; }
 
 		impl() : screenSize(getWindowSize()), diffbuff(screenSize),
-			 objects() {}
-
-	private:
-		static inline bool compareDrawables(Drawable *l, Drawable *r)
+			 objects()
 		{
-			return l->getZIndex() < r->getZIndex();
 		}
 
+	private:
 		void sortDrawables()
 		{
-			std::sort(objects.begin(), objects.end(), compareDrawables);
+			std::sort(objects.begin(), objects.end(),
+				  [](Drawable *l, Drawable *r) -> bool
+				  {return l->getZIndex() < r->getZIndex();});
 		}
 
 		inline bool isWithinBounds(const XY& coords) const
@@ -121,22 +140,20 @@ namespace cppanim::gfx {
 			}
 		}
 
-		static inline void drawSymbol(const Symbol &s)
-		{
-			// TODO: Implement color printing
-			printf("%c", s.symbol);
-		}
-
 		void drawToScreen()
 		{
 			diffbuff.generateDiff();
 
-			for(int i = 0; i < screenSize.x*screenSize.y; i++) {
-				if(diffbuff.getNext(i) != transparent) {
-					gotoxy(i % screenSize.x, i / screenSize.x);
-					drawSymbol(diffbuff.getNext(i));
+			for(int i = 0; i < screenSize.y; i++) {
+				for(int j = 0; j < screenSize.x; j++) {
+					auto s = diffbuff.getDiff(i * screenSize.x + j);
+					if(s != transparent) {
+						gotoxy(j, i);
+						drawSymbol(s);
+					}
 				}
 			}
+			fflush(stdout);
 
 			diffbuff.swapAndClear();
 		}
@@ -154,6 +171,7 @@ namespace cppanim::gfx {
 		pImpl->addDrawable(d);
 	}
 
+	void Screen::start() { pImpl->start(); }
 	void Screen::stop() { pImpl->stop(); }
 	void Screen::wait() { pImpl->wait(); }
 	void Screen::pause() { pImpl->pause(); }
