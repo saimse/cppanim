@@ -11,6 +11,7 @@ docs_dir = $(root_dir)/docs
 
 sofilename :=
 RMCMD :=
+RMDIRCMD :=
 MKDIRCMD := mkdir 
 
 CPP = g++
@@ -22,7 +23,8 @@ ifeq ($(OS),Windows_NT)
 	OSFLAG += -Wl,-Bstatic -lpthread -Wl,-Bdynamic -w
 	sofilename = libcppanim.dll
 
-	RMCMD = rd /S /Q
+	RMCMD = del
+	RMDIRCMD = rd /S /Q
 
 	LINKFLAGS += -shared -Wl,--out-implib,$(bin_dir)/$(sofilename).a -o $(bin_dir)/$(sofilename)
 
@@ -34,7 +36,8 @@ ifeq ($(OS),Windows_NT)
 	endif
 else
 	sofilename = libcppanim.so
-	RMCMD = rm -rf
+	RMCMD = rm -f
+	RMDIRCMD = rm -rf
 	MKDIRCMD += -p
 	LINKFLAGS += -o $(bin_dir)/$(sofilename)
 	UNAME_P := $(shell uname -p)
