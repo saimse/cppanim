@@ -38,6 +38,7 @@ namespace cppanim::gfx {
 		clock_t globalClock = 0;
 
 		std::unique_ptr<std::thread> drawingThread;
+		std::unique_ptr<std::thread> inputThread;
 
 		bool isRunning = false;
 		bool isPaused = false;
@@ -50,13 +51,17 @@ namespace cppanim::gfx {
 		void start()
 		{
 			isRunning = true;
+
+			Screen &s = Screen::getInstance();
+			inputThread.reset(new std::thread([&](){
+				while(isRunning) {
+					s.handleInput();
+				}
+			}));
+
 			clrscr();
 			drawingThread.reset(new std::thread([&](){
 				while(isRunning) {
-					//std::cout.flush();
-					//std::cout << std::endl;
-					//fflush(stdout);
-
 					if(isPaused) {
 						continue;
 					}
@@ -71,11 +76,7 @@ namespace cppanim::gfx {
 					}
 
 					generateBufferFromDrawables();
-
-					//std::cout << std::endl;
-					//printf("\n");
 					drawToScreen();
-					//getch_();
 
 					globalClock++;
 
@@ -87,7 +88,12 @@ namespace cppanim::gfx {
 		}
 
 		void stop() { isRunning = false; }
-		void wait() { stop(); drawingThread->join(); }
+		void wait()
+		{
+			stop();
+			drawingThread->join();
+			inputThread->join();
+		}
 		void pause() { isPaused = true; }
 		void unpause() { isPaused = false; }
 
