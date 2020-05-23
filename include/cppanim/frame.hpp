@@ -18,6 +18,9 @@ namespace cppanim::gfx {
 
 		explicit Frame(XY xy, const Symbol &s = Symbol());
 
+		Frame(const std::vector<Symbol>& copy);
+		Frame(std::initializer_list<Symbol> l);
+
 		const Symbol& operator[](size_t n) const;
 		Symbol& operator[](size_t n);
 			
