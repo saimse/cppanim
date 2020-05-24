@@ -36,7 +36,7 @@ ifeq ($(OS),Windows_NT)
 	endif
 else
 	sofilename = libcppanim.so
-	RMCMD = rm -f
+	RMCMD = rm -rf
 	RMDIRCMD = rm -rf
 	MKDIRCMD += -p
 	LINKFLAGS += -o $(bin_dir)/$(sofilename)
