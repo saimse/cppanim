@@ -51,13 +51,15 @@ void DiffBuff::generateDiff()
 
 void DiffBuff::resize(XY newsize)
 {
-	curr.clear();
-	next.clear();
-	diff.clear();
+#define o(n)						\
+	n.reserve(newsize.x * newsize.y);		\
+	std::fill(n.begin(), n.end(),			\
+		  cppanim::fundamentals::transparent);
 
-	curr.reserve(newsize.x * newsize.y);
-        next.reserve(newsize.x * newsize.y);
-        diff.reserve(newsize.x * newsize.y);
-	
+	o(curr);
+	o(next);
+	o(diff);
+
 	size = newsize;
+#undef o
 }

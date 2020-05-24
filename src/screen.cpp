@@ -72,7 +72,8 @@ namespace cppanim::gfx {
 					if(screenWH.x != screenSize.x
 					   || screenWH.y != screenSize.y) {
 						diffbuff.resize(screenWH);
-						screenWH = screenSize;
+						screenSize = screenWH;
+						clrscr();
 					}
 
 					generateBufferFromDrawables();
