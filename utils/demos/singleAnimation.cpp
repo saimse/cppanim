@@ -20,11 +20,11 @@ public:
 			if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_UP) {
 				if(position.y > 0) position.y--;
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
-				if(position.y < getWindowSize().y + size.y) position.y++;
+				if(position.y < getWindowSize().y - size.y) position.y++;
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_LEFT) {
 				if(position.x > 0) position.x--;
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_RIGHT) {
-				if(position.x < getWindowSize().x + size.x) position.x++;
+				if(position.x < getWindowSize().x - size.x) position.x++;
 			}
 		}
 	}
