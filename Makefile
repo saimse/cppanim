@@ -23,7 +23,7 @@ ifeq ($(OS),Windows_NT)
 	OSFLAG += -Wl,-Bstatic -lpthread -Wl,-Bdynamic -w
 	sofilename = libcppanim.dll
 
-	RMCMD = del
+	RMCMD = del /S /Q
 	RMDIRCMD = rd /S /Q
 
 	LINKFLAGS += -shared -Wl,--out-implib,$(bin_dir)/$(sofilename).a -o $(bin_dir)/$(sofilename)

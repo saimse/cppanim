@@ -18,7 +18,7 @@
 namespace cppanim::fundamentals {
 
 	#ifdef _WIN32
-		inline void gotoxy(int x, int y)
+		inline void gotoxy(SHORT x, SHORT y)
 		{ SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),
 					   (COORD){(x), (y)}); }
 	#else
