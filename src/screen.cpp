@@ -393,7 +393,21 @@ namespace cppanim::gfx {
 	}
 #endif
 
-  Screen::Screen() : pImpl{std::make_unique<impl>()} {}
-  Screen::~Screen() = default;
+	Screen& Screen::getInstance()
+	{
+		static Screen *instance = nullptr;
+		static std::mutex m;
+		if(instance == nullptr) {
+			m.lock();
+			if(instance == nullptr) {
+				instance = new Screen();
+			}
+			m.unlock();
+		}
+		return *instance;
+	}
+
+	Screen::Screen() : pImpl{std::make_unique<impl>()} {}
+	Screen::~Screen() = default;
 
 }
