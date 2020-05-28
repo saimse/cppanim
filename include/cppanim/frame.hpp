@@ -26,6 +26,9 @@ namespace cppanim::gfx {
 			
 		const Symbol& at(XY sz, XY xy) const;
 		Symbol& at(XY sz, XY xy);
+
+		void saveToFile(FILE* ref)const;
+		static Frame loadFromFile(XY size, FILE* ref);
 	};
 	
 }

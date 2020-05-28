@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cppanim/fundamentals.hpp>
+#include <stdio.h>
 
 namespace cppanim::gfx {
 	
@@ -44,6 +45,9 @@ namespace cppanim::gfx {
 
 		bool operator!=(const Symbol& s)
 		{ return !(operator==)(s); }
+
+		void saveToFile(FILE* ref)const;
+		static Symbol loadFromFile(FILE* ref);
 	};
 	
 }
