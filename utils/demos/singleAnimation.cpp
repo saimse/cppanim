@@ -54,8 +54,14 @@ int main()
 			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O'},
 		},
 	});
+       	FILE* f = fopen("testSave", "w");
+	a.saveToFile(f);
+	fclose(f);	
+	f = fopen("testSave", "r");
+	Animation b = Animation::loadFromFile(f);
+	fclose(f);
 	// Add the object to the screen
-	s.addDrawable(a);
+	s.addDrawable(b);
 
 	// Start drawing. This will start two new threads.
 	// Using std{in, out} before a call to stop() or wait()
@@ -63,7 +69,7 @@ int main()
 	s.start();
 
 	// Sleep in the main thread
-	cppanim::fundamentals::sleep(1000000);
+	cppanim::fundamentals::sleep(10000);
 
 	// Join the drawing threads
 	s.wait();

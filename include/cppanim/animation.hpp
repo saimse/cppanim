@@ -45,6 +45,9 @@ namespace cppanim::gfx {
 		void update(const Context&) override {}
 		std::tuple<const Frame&, const XY&>
 		draw(const Context&) override;
+		
+		void saveToFile(FILE* ref)const;
+		static Animation loadFromFile(FILE* ref);
 	};
 
 }

@@ -1,4 +1,4 @@
-files = animation frame fundamentals diffbuff screen focusable focusController mixin
+files = animation frame fundamentals diffbuff screen symbol focusable focusController mixin
 
 objects = $(addprefix $(obj_dir)/, $(addsuffix .o,$(files)))
 
