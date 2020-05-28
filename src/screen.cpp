@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdio.h>
 #include <thread>
+#include <mutex>
 
 #include "diffbuff.hpp"
 
