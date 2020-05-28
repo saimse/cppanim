@@ -12,7 +12,7 @@ docs_dir = $(root_dir)/docs
 sofilename :=
 RMCMD :=
 RMDIRCMD :=
-MKDIRCMD := mkdir 
+MKDIRCMD := mkdir -p
 
 CPP = g++
 

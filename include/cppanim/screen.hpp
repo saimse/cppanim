@@ -23,11 +23,8 @@ namespace cppanim::gfx {
 		void handleInput();
 		Screen();
 	public:
-		static Screen& getInstance()
-		{
-			static Screen instance;
-			return instance;
-		}
+		static Screen& getInstance();
+
 		void operator=(const Screen&) = delete;
 		Screen(const Screen&) = delete;
 

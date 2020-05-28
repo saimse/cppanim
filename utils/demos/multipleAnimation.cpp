@@ -2,6 +2,7 @@
 
 using namespace cppanim::gfx;
 using namespace cppanim::util;
+using namespace cppanim::fundamentals;
 
 class MoveWithArrows : public Animation, public KeyboardListener {
 public:
@@ -20,7 +21,6 @@ public:
 			if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_UP) {
 				if(position.y > 0) position.y--;
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
-			        printf ("a");
 				if(position.y < getWindowSize().y - size.y) position.y++;
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_LEFT) {
 				if(position.x > 0) position.x--;
@@ -28,8 +28,6 @@ public:
 				if(position.x < getWindowSize().x - size.x) position.x++;
 			}
 		}
-		else if(e.data == 'q')
-                        Screen::getInstance().stop();
 	}
 };
 
@@ -43,7 +41,16 @@ int main()
 	MoveWithArrows a ({
 		{3, 3},
 		{
-			{'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+			{'O', 'O', 'O', 'O', transparent, 'O', 'O', 'O', 'O'},
+		},
+		1,
+		{0, 0},
+		2,
+	});
+	Animation b{
+                {3, 3},
+                {
+                        {'O', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
 			{' ', 'O', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
 			{' ', ' ', 'O', ' ', ' ', ' ', ' ', ' ', ' '},
 			{' ', ' ', ' ', 'O', ' ', ' ', ' ', ' ', ' '},
@@ -52,16 +59,14 @@ int main()
 			{' ', ' ', ' ', ' ', ' ', ' ', 'O', ' ', ' '},
 			{' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O', ' '},
 			{' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'O'},
-		},
-	});
-       	FILE* f = fopen("testSave", "w");
-	a.saveToFile(f);
-	fclose(f);	
-	f = fopen("testSave", "r");
-	Animation b = Animation::loadFromFile(f);
-	fclose(f);
+                },
+                1,
+                {4, 4},
+                1,
+	};
 	// Add the object to the screen
-	s.addDrawable(b);
+	s.addDrawable(a);
+        s.addDrawable(b);
 
 	// Start drawing. This will start two new threads.
 	// Using std{in, out} before a call to stop() or wait()
@@ -69,7 +74,7 @@ int main()
 	s.start();
 
 	// Sleep in the main thread
-	cppanim::fundamentals::sleep(10000);
+	cppanim::fundamentals::sleep(1000000);
 
 	// Join the drawing threads
 	s.wait();

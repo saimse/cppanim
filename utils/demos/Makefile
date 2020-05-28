@@ -1,5 +1,5 @@
 objdir = $(obj_dir)/utils/demos
-files = singleAnimation
+files = singleAnimation mixin multipleAnimation
 
 binfiles = $(addprefix $(bin_dir)/, $(files))
 objects = $(addprefix $(objdir)/, $(addsuffix .o,$(files)))
@@ -13,7 +13,7 @@ $(binfiles): $(objects)
 
 .PHONY: dirstruct
 dirstruct:
-	@$(MKDIRCMD) $(objdir)
+	@mkdir -p $(objdir)
 
 $(objdir)/%.o: $(notdir %.cpp)
 	$(CPP) -c -o $@ $< $(CFLAGS) -Wall
