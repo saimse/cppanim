@@ -1,6 +1,11 @@
 #include <cppanim/focusController.hpp>
 
 namespace cppanim::util{
+	FocusContoller& FocusController::getInstance()
+	{
+		static FocusController instance;
+		return instance;
+	}
 	FocusController::FocusController(): focusables(), focusIndex(0)
 	{
 		cppanim::gfx::Screen::getInstance()

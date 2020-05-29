@@ -22,11 +22,7 @@ namespace cppanim::util {
 			return;
 		}
 
-		static FocusController& getInstance()
-		{
-			static FocusController instance;
-			return instance;
-		}
+		static FocusController& getInstance();
 
 		void registerListener(Focusable& ref);
 
