@@ -1,5 +1,5 @@
 objdir = $(obj_dir)/utils/demos
-files = singleAnimation mixin multipleAnimation
+files = singleAnimation mixin multipleAnimation focusableMixins
 
 binfiles = $(addprefix $(bin_dir)/, $(files))
 objects = $(addprefix $(objdir)/, $(addsuffix .o,$(files)))

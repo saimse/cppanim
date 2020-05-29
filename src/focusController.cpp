@@ -1,7 +1,7 @@
 #include <cppanim/focusController.hpp>
 
 namespace cppanim::util{
-	FocusContoller& FocusController::getInstance()
+	FocusController& FocusController::getInstance()
 	{
 		static FocusController instance;
 		return instance;
@@ -19,7 +19,7 @@ namespace cppanim::util{
 
 	void FocusController::onEvent(const KeyboardEvent& ref)
 	{
-		if(ref.data == '\t'){
+		if(ref.data == 9){
 			focusables[focusIndex]->onFocusLoss();
 			focusIndex =
 				++focusIndex % focusables.size();
