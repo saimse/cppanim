@@ -246,14 +246,14 @@ namespace cppanim::gfx {
 			default:
 				return;
 			}
+		} else if((c >= 32 && c < 127)
+			  ||c == '\t' || c == '\b' || c == '\n') {
+			//127 is DEL which is handled above
+			e.data = c;
 		} else if(c >= 1 && c <= 26) {
 			e.setState(KeyboardEvent::E_KEYBOARD_CONTROL);
 			e.data = 'A' + c - 1;
-		} else if((c >= 32 && c < 127)
-			  ||c == '\t' || c == '\b' || c == '\n'){
-			//127 is DEL which is handled above
-			e.data = c;
-		} else{
+		} else {
 			return;
 		}
 
@@ -326,14 +326,14 @@ namespace cppanim::gfx {
 			parsed++;
 		}
 
-		if(buf[parsed] >= 1 && buf[parsed] <= 26) {
+		if((buf[parsed] >= 32 && buf[parsed] < 127)
+			  || buf[parsed] == '\t'|| buf[parsed] == '\b'
+			  || buf[parsed] == '\n') {
+			e.data = buf[parsed];
+			parsed++;
+		} else if(buf[parsed] >= 1 && buf[parsed] <= 26) {
 			e.setState(KeyboardEvent::E_KEYBOARD_CONTROL);
 			e.data = 'A' + buf[parsed] - 1;
-			parsed++;
-		} else if((buf[parsed] >= 32 && buf[parsed] < 127)
-			  || buf[parsed] == '\t'|| buf[parsed] == '\b'
-			  || buf[parsed] == '\n'){
-			e.data = buf[parsed];
 			parsed++;
 		}
 
