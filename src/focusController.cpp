@@ -19,7 +19,7 @@ namespace cppanim::util{
 
 	void FocusController::onEvent(const KeyboardEvent& ref)
 	{
-		if(ref.data == 9){
+		if(!ref.isSpecialKey && ref.data == 9){
 			focusables[focusIndex]->onFocusLoss();
 			focusIndex =
 				++focusIndex % focusables.size();
