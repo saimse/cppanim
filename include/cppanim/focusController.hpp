@@ -7,11 +7,12 @@
 
 #include <vector>
 
-namespace cppanim::util {
+namespace cppanim {
 	class Focusable;
 	class FocusController : public KeyboardBroadcaster
 			      , public KeyboardListener {
 	private:
+		// TODO: avoid storing regular ptr with pImpl
 		std::vector<Focusable*> focusables;
 		std::size_t focusIndex;
 		FocusController();

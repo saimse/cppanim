@@ -5,8 +5,7 @@
 
 #include <vector>
 
-using namespace cppanim::gfx;
-using namespace cppanim::fundamentals;
+using namespace cppanim;
 
 struct DiffBuff {
 	std::vector<Symbol> curr;
@@ -14,11 +13,11 @@ struct DiffBuff {
 	std::vector<Symbol> diff;
 
 	XY size;
-	
+
 	Symbol& getCurrent(std::size_t n);
 	Symbol& getNext(std::size_t n);
 	Symbol& getDiff(std::size_t n);
-	
+
 	// Get Symbol in `next' buffer
 	Symbol& operator[](std::size_t n);
 	Symbol& operator[](XY xy);

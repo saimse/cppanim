@@ -4,34 +4,33 @@
 #include <stdio.h>
 #include <math.h>
 
-namespace cppanim::gfx {
+namespace cppanim {
 
-
-        Animation::Animation(XY size, std::size_t duration, float playRate,
-		             XY position, int zIndex)
-                             : duration(duration)
-			     , data(duration, Frame(size))
-                             , playRate(playRate)
-        {
-                data.reserve(duration);
+	Animation::Animation(XY size, std::size_t duration, float playRate,
+			     XY position, int zIndex)
+			     : data(duration, Frame(size))
+			     , duration(duration)
+			     , playRate(playRate)
+	{
+		data.reserve(duration);
 		this->size = size;
 		this->position = position;
 		this->zIndex = zIndex;
-        }
+	}
 
-        Animation::Animation(const Animation& copy) : duration(copy.duration)
-                                                      , data(copy.data),
-                                                      playRate(copy.playRate)
-        {
+	Animation::Animation(const Animation& copy) : data(copy.data)
+						    , duration(copy.duration)
+						    , playRate(copy.playRate)
+	{
 		this->size = copy.size;
 		this->position = copy.position;
 		this->zIndex = copy.zIndex;
 	}
 
-        Animation::Animation(XY size, const std::vector<Frame> &data,
+	Animation::Animation(XY size, const std::vector<Frame> &data,
 			     float playRate, XY position, int zIndex)
-                                        : duration(data.size()), data(data),
-                                          playRate(playRate)
+					: data(data), duration(data.size()),
+					  playRate(playRate)
 	{
 		this->size = size;
 		this->position = position;
@@ -46,7 +45,7 @@ namespace cppanim::gfx {
 		this->position = position;
 		this->zIndex = zIndex;
 	}
-	
+
 	const std::size_t& Animation::getDuration() const { return duration;}
 	_cppanim_getterDefin(Animation, float, playRate, getPlayRate);
 	void Animation::setPlayRate(float p) { playRate = p; }
@@ -60,23 +59,23 @@ namespace cppanim::gfx {
 	const Frame& Animation::operator()(std::size_t t) const
 	{ return (*this)[ floor( fmod( t, duration/playRate ) ) ]; }
 
-        std::tuple<const Frame&, const XY&> Animation::draw
+	std::tuple<const Frame&, const XY&> Animation::draw
 	(const Context& c)
 	{
 		return std::tuple<const Frame&, const XY&>(
 			(*this)(c.globalClock),
-		        size);
+			size);
 	}
 
 	void Animation::saveToFile(FILE* ref)const
 	{
-      		fprintf(ref, "%u\036", duration);
+		fprintf(ref, "%lu\036", duration);
 		fprintf(ref, "%f%c", playRate, 30);
 		fprintf(ref, "%d%c", size.x, 30);
 		fprintf(ref, "%d%c", size.y, 30);
 		fprintf(ref, "%d%c", position.x, 30);
 		fprintf(ref, "%d%c", position.y, 30);
-		fprintf(ref, "%d%c", zIndex, 30);
+		fprintf(ref, "%lu%c", zIndex, 30);
 		for(int i = 0; i < (size.x * size.y); ++i){
 			data[i].saveToFile(ref);
 		}
@@ -88,7 +87,7 @@ namespace cppanim::gfx {
 		float playRate;
 		XY xy, position;
 		std::size_t zIndex;
-		fscanf(ref, "%u\036%f\036%d\036%d\036%d\036%d\036%d\036",
+		fscanf(ref, "%lu\036%f\036%d\036%d\036%d\036%d\036%lu\036",
 			&duration, &playRate, &xy.x, &xy.y, &position.x,
 			&position.y, &zIndex);
 		Animation s(xy, duration, playRate, position, zIndex);
@@ -97,5 +96,5 @@ namespace cppanim::gfx {
 		}
 		return s;
 	}
-			
+
 }

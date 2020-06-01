@@ -4,12 +4,12 @@
 
 #include <string>
 
-namespace cppanim::util {
+namespace cppanim {
 
 	template <class T>
 	struct Event {
 		const std::string name;
-		cppanim::fundamentals::clock_t timestamp;
+		clock_t timestamp;
 		T data;
 	};
 

@@ -1,6 +1,6 @@
 #include <cppanim/fundamentals.hpp>
 
-namespace cppanim::fundamentals {
+namespace cppanim {
 
 	// #ifdef _WIN32
 	// 	void gotoxy(int x, int y)

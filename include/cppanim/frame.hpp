@@ -6,10 +6,8 @@
 #include <cstddef>
 #include <vector>
 
-namespace cppanim::gfx {
+namespace cppanim {
 
-	using namespace cppanim::fundamentals;
-	
 	class Frame {
 		std::vector<Symbol> buffer;
 	public:

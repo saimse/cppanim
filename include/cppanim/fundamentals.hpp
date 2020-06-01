@@ -15,7 +15,7 @@
 	#error "Unknown host/target"
 #endif
 
-namespace cppanim::fundamentals {
+namespace cppanim {
 
 	#ifdef _WIN32
 		inline void gotoxy(SHORT x, SHORT y)

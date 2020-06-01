@@ -10,9 +10,7 @@
 #include <cppanim/frame.hpp>
 #include "getterMacro.hpp"
 
-namespace cppanim::gfx {
-
-	using namespace cppanim::fundamentals;
+namespace cppanim {
 
 	class Animation : public Drawable {
 

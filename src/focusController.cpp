@@ -1,6 +1,6 @@
 #include <cppanim/focusController.hpp>
 
-namespace cppanim::util{
+namespace cppanim {
 	FocusController& FocusController::getInstance()
 	{
 		static FocusController instance;
@@ -8,7 +8,7 @@ namespace cppanim::util{
 	}
 	FocusController::FocusController(): focusables(), focusIndex(0)
 	{
-		cppanim::gfx::Screen::getInstance()
+		cppanim::Screen::getInstance()
 			.registerListener(*this);
 	}
 

@@ -2,8 +2,8 @@
 
 #include <cppanim/fundamentals.hpp>
 
-namespace cppanim::gfx {
+namespace cppanim {
         struct Context {
-		cppanim::fundamentals::clock_t globalClock;
+		clock_t globalClock;
 	};
 }

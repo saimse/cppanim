@@ -31,9 +31,9 @@ void DiffBuff::swapAndClear()
 	curr = next;
 
 	std::fill(next.begin(), next.end(),
-		  cppanim::fundamentals::transparent);
+		  cppanim::transparent);
 	std::fill(diff.begin(), diff.end(),
-		  cppanim::fundamentals::transparent);
+		  cppanim::transparent);
 }
 
 void DiffBuff::generateDiff()
@@ -54,7 +54,7 @@ void DiffBuff::resize(XY newsize)
 #define o(n)						\
 	n.reserve(newsize.x * newsize.y);		\
 	std::fill(n.begin(), n.end(),			\
-		  cppanim::fundamentals::transparent);
+		  cppanim::transparent);
 
 	o(curr);
 	o(next);

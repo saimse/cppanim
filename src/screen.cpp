@@ -17,10 +17,7 @@
 
 #include <iostream>
 
-namespace cppanim::gfx {
-
-	using namespace cppanim::fundamentals;
-	using namespace cppanim::util;
+namespace cppanim {
 
 	static inline void drawSymbol(const Symbol &s)
 	{
@@ -82,9 +79,7 @@ namespace cppanim::gfx {
 
 					globalClock++;
 
-					cppanim::fundamentals::sleep(
-						1000 / framerate
-					);
+					cppanim::sleep( 1000 / framerate );
 				}
 			}));
 		}
