@@ -1,7 +1,7 @@
 #include <cppanim.hpp>
 #include <stdio.h>
 
-using namespace cppanim::gfx;
+using namespace cppanim;
 
 class Border : public Mixin {
 public:

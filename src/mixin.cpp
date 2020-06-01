@@ -1,6 +1,6 @@
 #include <cppanim/mixin.hpp>
 
-namespace cppanim::gfx {
+namespace cppanim {
 
 	Mixinable::Mixinable(std::initializer_list<Mixin *> m,
 			     XY size, XY position, std::size_t zIndex)

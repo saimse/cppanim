@@ -3,22 +3,16 @@
 #include <cppanim/fundamentals.hpp>
 #include <stdio.h>
 
-namespace cppanim::gfx {
+namespace cppanim {
 	
 	struct Symbol {
-		fundamentals::char_t symbol;
+		char_t symbol;
 		int color;
 
-		Symbol() : symbol(fundamentals::transparent),
-			   color(fundamentals::black) {}
-		Symbol(fundamentals::char_t s, int c) : symbol(s), color(c)
-		{}
-		Symbol(fundamentals::char_t s) : symbol(s),
-						 color(fundamentals::black)
-		{}
-
+		Symbol() : symbol(transparent), color(black) {}
+		Symbol(char_t s, int c = black) : symbol(s), color(c) {}
 		
-		void operator=(fundamentals::char_t newSymbol)
+		void operator=(char_t newSymbol)
 		{ this->symbol = newSymbol; }
 		
 		Symbol& operator=(const Symbol& ns)
@@ -28,19 +22,19 @@ namespace cppanim::gfx {
 			return *this;
 		}
 
-		void operator()(fundamentals::char_t symbol, int color)
+		void operator()(char_t symbol, int color)
 		{
 			this->symbol = symbol;
 			this->color = color;
 		}
 		
-		bool operator==(fundamentals::char_t symbol)
+		bool operator==(char_t symbol)
 		{ return this->symbol == symbol; }
 		
 		bool operator==(const Symbol& s)
 		{ return (symbol == s.symbol) && (color == s.color); }
 
-		bool operator!=(fundamentals::char_t s)
+		bool operator!=(char_t s)
 		{ return !(operator==)(s); }
 
 		bool operator!=(const Symbol& s)

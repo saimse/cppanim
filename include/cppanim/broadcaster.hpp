@@ -5,7 +5,7 @@
 
 #include <vector>
 
-namespace cppanim::util {
+namespace cppanim {
 
 	template<typename T, class C = GenericListener<T>>
 	class GenericBroadcaster {
@@ -21,7 +21,7 @@ namespace cppanim::util {
 		explicit GenericBroadcaster(
 			std::initializer_list<C *> i)
 			: listeners(i) {}
-			
+
 	};
 
 	template<typename T>
@@ -29,5 +29,5 @@ namespace cppanim::util {
 						    EventListener<T>>;
 
 	using KeyboardBroadcaster = GenericBroadcaster<KeyboardEvent>;
-	
+
 }

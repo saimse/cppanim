@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <wchar.h>
 
-namespace cppanim::gfx {
+namespace cppanim {
 
         Frame::Frame(std::size_t surface, const Symbol &s)
 		: buffer(surface, s) {}

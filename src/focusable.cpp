@@ -1,6 +1,6 @@
 #include <cppanim/focusable.hpp>
 
-namespace cppanim::util{
+namespace cppanim {
 	Focusable::Focusable()
 	{
 		FocusController::getInstance()

@@ -2,7 +2,7 @@
 
 #include <cppanim/event.hpp>
 
-namespace cppanim::util {
+namespace cppanim {
 
 	template<typename T>
 	struct GenericListener {

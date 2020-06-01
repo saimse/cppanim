@@ -6,8 +6,8 @@ using namespace cppanim::test;
 #include <cppanim/symbol.hpp>
 Unit::result_t symbol_test()
 {
-	cppanim::gfx::Symbol x('a', cppanim::fundamentals::white);
-	cppanim::gfx::Symbol y('b');
+	cppanim::Symbol x('a', cppanim::white);
+	cppanim::Symbol y('b');
 
 	x = 'z';
 
@@ -24,11 +24,11 @@ Unit::result_t getch_test()
 	printf("After this line getch() will be called.\n");
 
 	printf("Enter any letter: ");
-	cppanim::fundamentals::getch_();
+	cppanim::getch_();
 
 	printf("\nEnter y if the character didn't echo "\
 	       "and enter wasn't needed: ");
-	c = cppanim::fundamentals::getch_();
+	c = cppanim::getch_();
 
 	printf("\n");
 
@@ -43,8 +43,8 @@ Unit::result_t getch_test()
 #include <cppanim/listener.hpp>
 Unit::result_t eventBroadcasterListener_test()
 {
-	class IntEventListener : public cppanim::util::EventListener<int> {
-		virtual void onEvent(const cppanim::util::Event<int>& e)
+	class IntEventListener : public cppanim::EventListener<int> {
+		virtual void onEvent(const cppanim::Event<int>& e)
 		{
 			if(!(e.name == "name"
 			     || e.timestamp == 123
@@ -56,9 +56,9 @@ Unit::result_t eventBroadcasterListener_test()
 	} listener;
 
 	class IntEventBroadcaster
-		: public cppanim::util::EventBroadcaster<int> {
+		: public cppanim::EventBroadcaster<int> {
 	public:
-		void sendEvent(cppanim::util::Event<int> intEvent)
+		void sendEvent(cppanim::Event<int> intEvent)
 		{
 			for(auto l : listeners)
 				l->onEvent(intEvent);
@@ -77,15 +77,15 @@ Unit::result_t eventBroadcasterListener_test()
 #include <cppanim/screen.hpp>
 Unit::result_t screenInputHandling_test()
 {
-	cppanim::gfx::Screen &s = cppanim::gfx::Screen::getInstance();
+	cppanim::Screen &s = cppanim::Screen::getInstance();
 
-	class MyKBListener : public cppanim::util::KeyboardListener {
+	class MyKBListener : public cppanim::KeyboardListener {
 	public:
 		bool success = false;
-		virtual void onEvent(const cppanim::util::KeyboardEvent& e) override {
+		virtual void onEvent(const cppanim::KeyboardEvent& e) override {
 			if(e.isSpecialKey
 			   && e.specialKey
-			   == cppanim::util::KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
+			   == cppanim::KeyboardEvent::E_KEYBOARD_ARR_DOWN) {
 				success = true;
 			}
 		}

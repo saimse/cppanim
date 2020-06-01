@@ -1,7 +1,6 @@
 #include <cppanim.hpp>
 
-using namespace cppanim::gfx;
-using namespace cppanim::util;
+using namespace cppanim;
 
 class MoveWithArrows : public Animation, public KeyboardListener {
 public:
@@ -69,7 +68,7 @@ int main()
 	s.start();
 
 	// Sleep in the main thread
-	cppanim::fundamentals::sleep(10000);
+	cppanim::sleep(10000);
 
 	// Join the drawing threads
 	s.wait();

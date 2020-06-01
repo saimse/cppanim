@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <wchar.h>
 
-namespace cppanim::gfx{
+namespace cppanim {
 	void Symbol::saveToFile(FILE* ref)const
 	{fprintf(ref, "%c%c%d%c", symbol, 30, color,30);}
 	Symbol Symbol::loadFromFile(FILE* ref)

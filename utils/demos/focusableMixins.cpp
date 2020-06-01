@@ -1,9 +1,7 @@
 #include <cppanim.hpp>
 #include <cppanim/focusable.hpp>
 
-using namespace cppanim::fundamentals;
-using namespace cppanim::gfx;
-using namespace cppanim::util;
+using namespace cppanim;
 
 class Border : public Mixin {
 public:
@@ -63,6 +61,16 @@ public:
 			} else if(e.specialKey == KeyboardEvent::E_KEYBOARD_ARR_RIGHT
 				  && size.x < getWindowSize().x - 1){
 			        resize({++size.x, size.y});
+			}
+		} else {
+			if(e.data == 'w') {
+				if(position.y > 0) position.y--;
+			} else if(e.data == 's') {
+				if(position.y < getWindowSize().y - size.y) position.y++;
+			} else if(e.data == 'a') {
+				if(position.x > 0) position.x--;
+			} else if(e.data == 'd') {
+				if(position.x < getWindowSize().x - size.x) position.x++;
 			}
 		}
 	}

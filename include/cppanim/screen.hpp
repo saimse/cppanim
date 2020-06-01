@@ -8,10 +8,7 @@
 #include <experimental/propagate_const>
 #include <vector>
 
-namespace cppanim::gfx {
-
-	using namespace cppanim::fundamentals;
-	using namespace cppanim::util;
+namespace cppanim {
 
 	class Screen : public KeyboardBroadcaster {
 
