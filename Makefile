@@ -18,6 +18,11 @@ CPP = g++
 
 BUILDFLAGS = -I$(include_dir) -lpthread
 
+#PREFIX is environment variable, but if it is not set, then set default value
+ifeq ($(PREFIX),)
+    PREFIX := /usr/local
+endif
+
 ifeq ($(OS),Windows_NT)
 # Necessary for pthreads to work under MinGW
 	OSFLAG += -Wl,-Bstatic -lpthread -Wl,-Bdynamic -w
@@ -55,6 +60,15 @@ override CFLAGS += $(OSFLAGS) $(BUILDFLAGS) -fPIC -O2
 # cppanim is an alias for src
 .PHONY: cppanim
 cppanim: src
+
+install: cppanim
+	@echo Installing...
+	@install -d $(DESTDIR)$(PREFIX)/lib/
+	@install -m 644 $(bin_dir)/$(sofilename) $(DESTDIR)$(PREFIX)/lib/
+	@install -d $(DESTDIR)$(PREFIX)/include/
+	@cp -r $(include_dir)/* $(DESTDIR)$(PREFIX)/include/
+	@chmod -R 644 $(DESTDIR)$(PREFIX)/include/cppanim*
+	@echo Installed to $(DESTDIR)$(PREFIX)/lib and $(DESTDIR)$(PREFIX)/include
 
 debug: CFLAGS += -O0 -g
 debug: cleanso src
