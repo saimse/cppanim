@@ -31,6 +31,10 @@ namespace cppanim {
 		XY screenSize;
 		DiffBuff diffbuff;
 
+		std::chrono::time_point<
+			std::chrono::steady_clock> lastCyclePoint;
+		std::chrono::milliseconds::rep lastCycle;
+
 		std::vector<Drawable *> objects;
 
 		clock_t globalClock = 0;
@@ -80,6 +84,8 @@ namespace cppanim {
 					globalClock++;
 
 					cppanim::sleep( 1000 / framerate );
+					lastCycle = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - lastCyclePoint).count();
+					lastCyclePoint = std::chrono::steady_clock::now();
 				}
 			}));
 		}
@@ -87,7 +93,6 @@ namespace cppanim {
 		void stop() { isRunning = false; }
 		void wait()
 		{
-			stop();
 			drawingThread->join();
 			inputThread->join();
 		}
@@ -165,6 +170,7 @@ namespace cppanim {
 		{
 			return {
 				globalClock,
+				lastCycle,
 			};
 		}
 	};
