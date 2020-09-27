@@ -32,6 +32,9 @@ namespace cppanim {
 		void wait();
 		void pause();
 		void unpause();
+		void togglePause();
+		bool isPaused();
+		bool isRunning();
 
 		~Screen();
 	};

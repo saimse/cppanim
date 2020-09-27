@@ -184,8 +184,14 @@ namespace cppanim {
 	void Screen::start() { pImpl->start(); }
 	void Screen::stop() { pImpl->stop(); }
 	void Screen::wait() { pImpl->wait(); }
+
 	void Screen::pause() { pImpl->pause(); }
 	void Screen::unpause() { pImpl->unpause(); }
+	void Screen::togglePause()
+	{ return pImpl->isPaused ? unpause() : pause(); }
+
+        bool Screen::isPaused() { return pImpl->isPaused; }
+	bool Screen::isRunning() { return pImpl->isRunning; }
 
 #ifdef _WIN32
 #define S(m)					\
