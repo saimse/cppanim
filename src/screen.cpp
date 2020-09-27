@@ -171,6 +171,7 @@ namespace cppanim {
 			return {
 				globalClock,
 				lastCycle,
+			        1000.f / lastCycle,
 			};
 		}
 	};

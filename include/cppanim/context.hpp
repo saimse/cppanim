@@ -7,5 +7,6 @@ namespace cppanim {
         struct Context {
 		clock_t globalClock;
 		std::chrono::milliseconds::rep lastCycle;
+		float framerate;
 	};
 }
